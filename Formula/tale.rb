@@ -1,33 +1,73 @@
 class Tale < Formula
   desc "Keyboard-first terminal application for Tailscale networks"
   homepage "https://github.com/ukashazia/tale"
-  version "2.0.5"
+  version "2.0.6"
+  if OS.mac?
+    if Hardware::CPU.arm?
+      url "https://github.com/ukashazia/tale/releases/download/v2.0.6/tale-aarch64-apple-darwin.tar.gz"
+      sha256 "b0bc384c57bdf6e26baafd6605f530fe6b25d7c0f6a55e2b8a002dd7573aa114"
+    end
+    if Hardware::CPU.intel?
+      url "https://github.com/ukashazia/tale/releases/download/v2.0.6/tale-x86_64-apple-darwin.tar.gz"
+      sha256 "20e4274e47afb8ed4f73b43862ca9f1e5fe4935f6028ff13ead9845a9807e9b2"
+    end
+  end
+  if OS.linux?
+    if Hardware::CPU.arm?
+      url "https://github.com/ukashazia/tale/releases/download/v2.0.6/tale-aarch64-unknown-linux-gnu.tar.gz"
+      sha256 "e558daeb5ea0b14536f817632bc7ce6cb5116673585c17032b0468ba7543af53"
+    end
+    if Hardware::CPU.intel?
+      url "https://github.com/ukashazia/tale/releases/download/v2.0.6/tale-x86_64-unknown-linux-gnu.tar.gz"
+      sha256 "606b4f7bd4d74d22e59a971b269f7c3ad4bee9fc5048a5db28b5d9677726c94c"
+    end
+  end
   license "MIT"
 
-  on_macos do
-    on_arm do
-      url "https://github.com/ukashazia/tale/releases/download/v2.0.5/tale-aarch64-apple-darwin.tar.gz"
-      sha256 "07e4b84f8b4d1d52aa49c6b7b5ba1e96be045decd8f4aff1bd827231ebc3aab5"
-    end
+  BINARY_ALIASES = {
+    "aarch64-apple-darwin":      {},
+    "aarch64-unknown-linux-gnu": {},
+    "x86_64-apple-darwin":       {},
+    "x86_64-unknown-linux-gnu":  {},
+  }.freeze
 
-    on_intel do
-      url "https://github.com/ukashazia/tale/releases/download/v2.0.5/tale-x86_64-apple-darwin.tar.gz"
-      sha256 "8bf985b31a91303eff96e3a4d204fe60576ee7cc05ece8dd42d60ec3f0ad26d1"
+  def target_triple
+    cpu = Hardware::CPU.arm? ? "aarch64" : "x86_64"
+    os = OS.mac? ? "apple-darwin" : "unknown-linux-gnu"
+
+    "#{cpu}-#{os}"
+  end
+
+  def install_binary_aliases!
+    BINARY_ALIASES[target_triple.to_sym].each do |source, dests|
+      dests.each do |dest|
+        bin.install_symlink bin/source.to_s => dest
+      end
     end
   end
 
   def install
-    target = Hardware::CPU.arm? ? "aarch64-apple-darwin" : "x86_64-apple-darwin"
-    root = "tale-#{target}"
+    if OS.mac? && Hardware::CPU.arm?
+      bin.install "tale"
+    end
+    if OS.mac? && Hardware::CPU.intel?
+      bin.install "tale"
+    end
+    if OS.linux? && Hardware::CPU.arm?
+      bin.install "tale"
+    end
+    if OS.linux? && Hardware::CPU.intel?
+      bin.install "tale"
+    end
 
-    bin.install "#{root}/tale"
-    man1.install "#{root}/docs/cli/tale.1"
-    bash_completion.install "#{root}/completions/tale.bash" => "tale"
-    zsh_completion.install "#{root}/completions/_tale"
-    fish_completion.install "#{root}/completions/tale.fish"
-  end
+    install_binary_aliases!
 
-  test do
-    assert_match "tale", shell_output("#{bin}/tale --help")
+    # Homebrew will automatically install these, so we don't need to do that
+    doc_files = Dir["README.*", "readme.*", "LICENSE", "LICENSE.*", "CHANGELOG.*"]
+    leftover_contents = Dir["*"] - doc_files
+
+    # Install any leftover files in pkgshare; these are probably config or
+    # sample files.
+    pkgshare.install(*leftover_contents) unless leftover_contents.empty?
   end
 end
