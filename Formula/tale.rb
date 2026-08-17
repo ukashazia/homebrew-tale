@@ -1,25 +1,25 @@
 class Tale < Formula
   desc "Keyboard-first terminal application for Tailscale networks"
   homepage "https://github.com/ukashazia/tale"
-  version "2.1.0"
+  version "2.1.1"
   if OS.mac?
     if Hardware::CPU.arm?
-      url "https://github.com/ukashazia/tale/releases/download/v2.1.0/tale-aarch64-apple-darwin.tar.gz"
-      sha256 "1e8ce219789e10ac5e1e56d1af6a5c87d068a182cbaf4affed354446715d7eb0"
+      url "https://github.com/ukashazia/tale/releases/download/v2.1.1/tale-aarch64-apple-darwin.tar.gz"
+      sha256 "b23aa9c139a2a6905a456d9deb78e70132bfb0ac71abee4f565eead4f40e6d89"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/ukashazia/tale/releases/download/v2.1.0/tale-x86_64-apple-darwin.tar.gz"
-      sha256 "916aa32a90040a1f947db8c8d45ea6e520d00cd45ac89751f268e8b8ab4eadf5"
+      url "https://github.com/ukashazia/tale/releases/download/v2.1.1/tale-x86_64-apple-darwin.tar.gz"
+      sha256 "cb52ba92473e774837fee80205b1a001fda86b53ac60fec287718e9a948705f4"
     end
   end
   if OS.linux?
     if Hardware::CPU.arm?
-      url "https://github.com/ukashazia/tale/releases/download/v2.1.0/tale-aarch64-unknown-linux-gnu.tar.gz"
-      sha256 "ab715094500e9f944c01aaf3e1e515148c3436e0f3340343d72cad165dc3fdd9"
+      url "https://github.com/ukashazia/tale/releases/download/v2.1.1/tale-aarch64-unknown-linux-gnu.tar.gz"
+      sha256 "0db64350dab3c2002fca5e00ea81a029a7c5d37ea54e7d0df349bb895f70e63d"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/ukashazia/tale/releases/download/v2.1.0/tale-x86_64-unknown-linux-gnu.tar.gz"
-      sha256 "5c68259e4c171ce4f08cd99cd526a53785e36756e553b0f1729be7cfbf23a97e"
+      url "https://github.com/ukashazia/tale/releases/download/v2.1.1/tale-x86_64-unknown-linux-gnu.tar.gz"
+      sha256 "007dfc5ee40d74ba3870d75682474a2916511de0ad4a79e2804d64afd863f317"
     end
   end
   license "MIT"
