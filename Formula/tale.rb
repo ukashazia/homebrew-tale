@@ -5,21 +5,21 @@ class Tale < Formula
   if OS.mac?
     if Hardware::CPU.arm?
       url "https://github.com/ukashazia/tale/releases/download/v2.1.0/tale-aarch64-apple-darwin.tar.gz"
-      sha256 "efb9a1f000a337e966cd5c45518051f557e5444b40bacfa706c89e794b9b39d5"
+      sha256 "1e8ce219789e10ac5e1e56d1af6a5c87d068a182cbaf4affed354446715d7eb0"
     end
     if Hardware::CPU.intel?
       url "https://github.com/ukashazia/tale/releases/download/v2.1.0/tale-x86_64-apple-darwin.tar.gz"
-      sha256 "ce05ff38dc78f76cb01ac01c2d67e3cd38f7a98ef49702b1b3c9b1c97aed42d9"
+      sha256 "916aa32a90040a1f947db8c8d45ea6e520d00cd45ac89751f268e8b8ab4eadf5"
     end
   end
   if OS.linux?
     if Hardware::CPU.arm?
       url "https://github.com/ukashazia/tale/releases/download/v2.1.0/tale-aarch64-unknown-linux-gnu.tar.gz"
-      sha256 "ec53662e5cd25591e591aa630a4714216da24191e39f53ec23b1b8f4599526de"
+      sha256 "ab715094500e9f944c01aaf3e1e515148c3436e0f3340343d72cad165dc3fdd9"
     end
     if Hardware::CPU.intel?
       url "https://github.com/ukashazia/tale/releases/download/v2.1.0/tale-x86_64-unknown-linux-gnu.tar.gz"
-      sha256 "95529de27bba58e87b36efcaa13337a79cb9dd69f18a52fe170e977e27f029be"
+      sha256 "5c68259e4c171ce4f08cd99cd526a53785e36756e553b0f1729be7cfbf23a97e"
     end
   end
   license "MIT"
