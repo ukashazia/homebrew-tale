@@ -1,25 +1,25 @@
 class Tale < Formula
   desc "Keyboard-first terminal application for Tailscale networks"
   homepage "https://github.com/ukashazia/tale"
-  version "2.2.0"
+  version "2.3.1"
   if OS.mac?
     if Hardware::CPU.arm?
-      url "https://github.com/ukashazia/tale/releases/download/v2.2.0/tale-aarch64-apple-darwin.tar.gz"
-      sha256 "036f2c6cb4c0cb23f189b18bda5381d4a9b6dab01eab2b77efc087bca58b164b"
+      url "https://github.com/ukashazia/tale/releases/download/v2.3.1/tale-aarch64-apple-darwin.tar.gz"
+      sha256 "f9b8500cd95a342a2a7ecb2f9765f74208d6f843f9184beb0b0202145c4b5bd9"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/ukashazia/tale/releases/download/v2.2.0/tale-x86_64-apple-darwin.tar.gz"
-      sha256 "a89df336f0ca0ffc0d38a8b73982497034b80e30722c7935c69f84c929a8d6f5"
+      url "https://github.com/ukashazia/tale/releases/download/v2.3.1/tale-x86_64-apple-darwin.tar.gz"
+      sha256 "06b5254d8a1c2a509d16ce068467e61263f9038285c95154c051b4c84e288523"
     end
   end
   if OS.linux?
     if Hardware::CPU.arm?
-      url "https://github.com/ukashazia/tale/releases/download/v2.2.0/tale-aarch64-unknown-linux-gnu.tar.gz"
-      sha256 "fed5efb9ce33bad1e9c05befa03d3356ebe06cb0d7197a0025410a4405cc3738"
+      url "https://github.com/ukashazia/tale/releases/download/v2.3.1/tale-aarch64-unknown-linux-gnu.tar.gz"
+      sha256 "d4c152a574dd22dcd7d499b3b9e718eeeea575c3785054f8523b530ec5cdde34"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/ukashazia/tale/releases/download/v2.2.0/tale-x86_64-unknown-linux-gnu.tar.gz"
-      sha256 "5efe32a192f2ccc2fcd407f4bbae1e26103f47fa88bd0151652eab535da78f2f"
+      url "https://github.com/ukashazia/tale/releases/download/v2.3.1/tale-x86_64-unknown-linux-gnu.tar.gz"
+      sha256 "c256b50fdcab38927a57309e1e915516e4ad22a03a16e7aa9bd898e2519ccdea"
     end
   end
   license "MIT"
@@ -62,9 +62,14 @@ class Tale < Formula
 
     install_binary_aliases!
 
+    bash_completion.install "completions/tale.bash" => "tale"
+    zsh_completion.install "completions/_tale"
+    fish_completion.install "completions/tale.fish"
+
     # Homebrew will automatically install these, so we don't need to do that
     doc_files = Dir["README.*", "readme.*", "LICENSE", "LICENSE.*", "CHANGELOG.*"]
-    leftover_contents = Dir["*"] - doc_files
+    package_manager_files = ["completions"]
+    leftover_contents = Dir["*"] - doc_files - package_manager_files
 
     # Install any leftover files in pkgshare; these are probably config or
     # sample files.
